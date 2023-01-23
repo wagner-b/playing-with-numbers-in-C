@@ -10,3 +10,6 @@ This C program calculates and stores (in memory) the Fibonacci sequence (only as
 
 ### primes.c
 This is a C program that calculates and prints all prime numbers between a range specified by the user. Compilation example: `gcc primes.c -o primes`.
+
+### Compilation
+I have added a makefile, so if you have `make` and `gcc`, all you need to do is clone the repository, enter it, and then type `make`.
