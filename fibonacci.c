@@ -119,10 +119,9 @@ int menu(void)
 			return 1;
 		default:
 			printf("\nError! Please, type only y or n\n");
-			menu();
-
+			printf("Exiting program...\n");
+			return 0;
 	}
-
 }
 
 
@@ -132,12 +131,13 @@ int main(void)
 	unsigned long arrayLen = 2;
 
 	// initialize the fibo sequence
-	fib = allocateMemory(2, fib);
+	fib = allocateMemory(arrayLen, fib);
 	fib[0] = 0, fib[1] = 1;
 
 	// repeat the program how many times the user wants
 	do
-		fib = getFibo(fib, &arrayLen); while(menu());
+		fib = getFibo(fib, &arrayLen);
+	while(menu());
 
 	// free the memory before exiting
 	free(fib);
