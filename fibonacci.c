@@ -60,9 +60,9 @@ unsigned long getUserInput()
 }
 
 
-unsigned long* allocateMemory(unsigned long userInput, unsigned long* fib)
+unsigned long* allocateMemory(unsigned long* fib, unsigned long length)
 {
-	fib = realloc(fib, sizeof(unsigned long) * userInput);
+	fib = realloc(fib, sizeof(unsigned long) * length);
 
 	if(fib == NULL)
 	{
@@ -75,24 +75,20 @@ unsigned long* allocateMemory(unsigned long userInput, unsigned long* fib)
 }
 
 
-unsigned long* getFibo(unsigned long* fib, unsigned long* arrayLen)
+unsigned long* calculateAndPrintFibo(unsigned long* fib, unsigned long* arrayLen)
 {
-	unsigned long userInput;
+	unsigned long userInput = getUserInput();
 
-	userInput = getUserInput();
-
-	// if necessary, alocate more memory and caculate more fibo numbers
+	// if necessary, allocate more memory and calculate more fibo numbers
 	if(userInput > (* arrayLen))
 	{
-		fib = allocateMemory(userInput, fib);
-
+		fib = allocateMemory(fib, userInput);
 		for(unsigned long count = (* arrayLen); count < userInput; count++)
 			fib[count] = fib[count-2] + fib[count-1];
 
 		(* arrayLen) = userInput;
 	}
 
-	// print the result
 	printf("\nThe first %lu numbers of the Fibonacci sequence are:\n", userInput);
 	for(unsigned long count = 0; count < userInput; count++)
 		printf("%lu\n", fib[count]);
@@ -130,18 +126,17 @@ int main(void)
 	unsigned long* fib = NULL;
 	unsigned long arrayLen = 2;
 
-	// initialize the fibo sequence
-	fib = allocateMemory(arrayLen, fib);
+	// initialize the fibonacci sequence
+	fib = allocateMemory(fib, arrayLen);
 	fib[0] = 0, fib[1] = 1;
 
 	// repeat the program how many times the user wants
 	do
-		fib = getFibo(fib, &arrayLen);
+		fib = calculateAndPrintFibo(fib, &arrayLen);
 	while(menu());
 
 	// free the memory before exiting
 	free(fib);
 	fib = NULL;
-
 	return 0;
 }
